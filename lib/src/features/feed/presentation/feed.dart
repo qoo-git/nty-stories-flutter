@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nyt/src/common_widgets/responsive_center.dart';
 import 'package:nyt/src/constants/app_sizes.dart';
 import 'package:nyt/src/features/feed/presentation/components/feed_viewer.dart';
 import 'package:nyt/src/features/feed/presentation/components/search_and_filter_bar.dart';
 import 'package:nyt/src/features/feed/presentation/components/view_option_state.dart';
 
-class FeedPage extends ConsumerStatefulWidget {
+class FeedPage extends StatefulWidget {
   const FeedPage({
     super.key,
     required this.viewOption,
@@ -15,10 +14,10 @@ class FeedPage extends ConsumerStatefulWidget {
   final FeedViewOptions viewOption;
 
   @override
-  ConsumerState<FeedPage> createState() => _FeedPageState();
+  State<FeedPage> createState() => _FeedPageState();
 }
 
-class _FeedPageState extends ConsumerState<FeedPage> {
+class _FeedPageState extends State<FeedPage> {
   // * A ScrollController to register a listener that dismisses the
   // * on-screenkeyboard when user scrolls.
   // * The page has a search field that will prompt an on-screen keyboard

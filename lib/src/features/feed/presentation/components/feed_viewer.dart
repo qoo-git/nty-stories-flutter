@@ -6,8 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nyt/src/common_widgets/async_value_widget.dart';
 import 'package:nyt/src/common_widgets/custom_image.dart';
 import 'package:nyt/src/constants/app_sizes.dart';
-import 'package:nyt/src/features/feed/data/fake_data_respository.dart';
 import 'package:nyt/src/features/feed/domain/feed_model.dart';
+import 'package:nyt/src/features/feed/presentation/components/article_search_state_provider.dart';
 import 'package:nyt/src/features/feed/presentation/components/feed_article_card.dart';
 import 'package:nyt/src/features/feed/presentation/components/view_option_state.dart';
 import 'package:nyt/src/features/feed/presentation/components/view_option_state_controller.dart';
@@ -28,7 +28,7 @@ class _FeedViewerState extends ConsumerState<FeedViewer> {
   @override
   Widget build(BuildContext context) {
     // TODO: Listen for errors on fetching news feed data
-    final feedListValue = ref.watch(fakeFeedListStreamProvider);
+    final feedListValue = ref.watch(articleSearchResultProvider);
     final viewOptionState =
         ref.watch(viewOptionStateControllerProvider(widget.viewOption));
     return AsyncValueWidget<List<Feed>>(
@@ -36,7 +36,7 @@ class _FeedViewerState extends ConsumerState<FeedViewer> {
       data: (feed) => feed.isEmpty
           ? Center(
               child: Text(
-                'No news available at the moment',
+                'No news articles available',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             )

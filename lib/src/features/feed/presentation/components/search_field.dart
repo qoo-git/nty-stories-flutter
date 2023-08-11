@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nyt/src/constants/app_sizes.dart';
+import 'package:nyt/src/features/feed/presentation/components/article_search_state_provider.dart';
 
-class SearchTextField extends StatefulWidget {
+class SearchTextField extends ConsumerStatefulWidget {
   const SearchTextField({super.key});
 
   @override
-  State<SearchTextField> createState() => _SearchTextFieldState();
+  ConsumerState<SearchTextField> createState() => _SearchTextFieldState();
 }
 
-class _SearchTextFieldState extends State<SearchTextField> {
+class _SearchTextFieldState extends ConsumerState<SearchTextField> {
   final _controller = TextEditingController();
 
   @override
@@ -36,7 +38,8 @@ class _SearchTextFieldState extends State<SearchTextField> {
                 ? IconButton(
                     onPressed: () {
                       _controller.clear();
-                      //TODO: clear search state
+                      ref.read(articleSearchQueryStateProvider.notifier).state =
+                          '';
                     },
                     icon: const Icon(
                       Icons.clear_rounded,
@@ -45,8 +48,8 @@ class _SearchTextFieldState extends State<SearchTextField> {
                   )
                 : null,
           ),
-          //TODO: implement onChanged
-          onChanged: null,
+          onChanged: (text) =>
+              ref.read(articleSearchQueryStateProvider.notifier).state = text,
         );
       },
     );

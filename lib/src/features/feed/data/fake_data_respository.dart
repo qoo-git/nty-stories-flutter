@@ -4,17 +4,29 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nyt/src/constants/test_feed.dart';
 import 'package:nyt/src/features/feed/domain/feed_model.dart';
-import 'package:nyt/src/utils/delay.dart';
+import 'package:nyt/src/utils/in_memory.dart';
 
 class FakeFeedRepository {
   FakeFeedRepository({this.addDelay = true});
   final bool addDelay;
-  final List<Feed> _feed = kTestFeed;
-  //final List<Feed> _feed = [];
 
-  Stream<List<Feed>> watchFeedList() async* {
-    await delay(addDelay);
-    yield _feed;
+  /// pre-load device memory with the sample test data
+  final _feed = InMemoryStore<List<Feed>>(List.from(kTestFeed));
+
+  List<Feed> getFeedList() {
+    return _feed.value;
+  }
+
+  Feed? getArticleFeed(String title) {
+    return _getFeedArticle(_feed.value, title);
+  }
+
+  Future<List<Feed>> fetchFeedArticlesList() async {
+    return Future.value(_feed.value);
+  }
+
+  Stream<List<Feed>> watchFeedList() {
+    return _feed.stream;
   }
 
   Stream<Feed?> watchFeedArticle(String title) {
@@ -28,11 +40,28 @@ class FakeFeedRepository {
       return null;
     }
   }
+
+  /// Search for an article using the title
+  Future<List<Feed>> searchFeedArticle(String query) async {
+    assert(_feed.value.length <= 100,
+        'Client-side search should only be used for small amounts of data');
+
+    // fetch all products from repository
+    final feedArticleList = await fetchFeedArticlesList();
+    // return any article that matches the query passed
+    return feedArticleList
+        .where((article) =>
+            article.title.toLowerCase().contains(query) ||
+            article.title.contains(query))
+        .toList();
+  }
 }
 
 // fakeFeedRepositoryProvider
 final fakeFeedRepositoryProvider = Provider<FakeFeedRepository>((ref) {
-  return FakeFeedRepository();
+  // * Set delay to false for faster loading during development
+  // * Set it to true during testing to test loading states
+  return FakeFeedRepository(addDelay: false);
 });
 
 // fakeFeedListStreamProvider
@@ -70,4 +99,20 @@ final fakeFeedArticleProvider =
 // watch the stream of incoming news feed single article
   final feedRepository = ref.watch(fakeFeedRepositoryProvider);
   return feedRepository.watchFeedArticle(title);
+});
+
+final feedArticleListFutureProvider =
+    FutureProvider.autoDispose<List<Feed>>((ref) {
+  final feedRepository = ref.watch(fakeFeedRepositoryProvider);
+  return feedRepository.fetchFeedArticlesList();
+});
+
+final articleListSearchProvider =
+    FutureProvider.autoDispose.family<List<Feed>, String>((ref, query) async {
+  final link = ref.keepAlive();
+  Timer(const Duration(seconds: 20), () {
+    link.close();
+  });
+  final feedRepository = ref.watch(fakeFeedRepositoryProvider);
+  return feedRepository.searchFeedArticle(query);
 });
