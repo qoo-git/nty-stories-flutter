@@ -10,6 +10,7 @@ class FakeFeedRepository {
   FakeFeedRepository({this.addDelay = true});
   final bool addDelay;
   final List<Feed> _feed = kTestFeed;
+  //final List<Feed> _feed = [];
 
   Stream<List<Feed>> watchFeedList() async* {
     await delay(addDelay);
