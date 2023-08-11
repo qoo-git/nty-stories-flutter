@@ -52,7 +52,8 @@ class FakeFeedRepository {
     return feedArticleList
         .where((article) =>
             article.title.toLowerCase().contains(query) ||
-            article.title.contains(query))
+            article.title.contains(query) ||
+            article.title.toUpperCase().contains(query))
         .toList();
   }
 }
