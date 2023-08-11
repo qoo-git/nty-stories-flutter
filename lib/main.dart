@@ -9,3 +9,5 @@ void main() async {
   // * Entry point of the app
   runApp(const MyApp());
 }
+
+// TODO: register error handling
