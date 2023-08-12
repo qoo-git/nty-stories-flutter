@@ -53,7 +53,10 @@ class FakeFeedRepository {
         .where((article) =>
             article.title.toLowerCase().contains(query) ||
             article.title.contains(query) ||
-            article.title.toUpperCase().contains(query))
+            article.title.toUpperCase().contains(query) ||
+            article.author.toLowerCase().contains(query) ||
+            article.author.contains(query) ||
+            article.author.toUpperCase().contains(query))
         .toList();
   }
 }
