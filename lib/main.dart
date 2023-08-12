@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nyt/src/app.dart';
+import 'package:nyt/src/constants/app_sizes.dart';
 import 'package:nyt/src/exceptions/error_logger.dart';
 import 'package:url_strategy/url_strategy.dart';
 
@@ -40,10 +41,16 @@ void registerErrorHandlers(ErrorLogger errorLogger) {
   };
   // * Show some error UI when any widget in the app fails to build
   ErrorWidget.builder = (FlutterErrorDetails details) {
-    return Center(
-      child: Card(
+    return Container(
+      padding: const EdgeInsets.all(Sizes.p16),
+      decoration: BoxDecoration(
         color: Colors.grey[200],
-        child: Center(child: Text(details.toString())),
+        borderRadius: BorderRadius.circular(Sizes.p12),
+      ),
+      child: Center(
+        child: Card(
+          child: Center(child: Text(details.toString())),
+        ),
       ),
     );
   };
