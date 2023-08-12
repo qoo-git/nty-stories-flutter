@@ -13,7 +13,6 @@ class CustomImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: use [CachedNetworkImage] for remote sources
     return remoteFeed
         ? CachedNetworkImage(
             imageUrl: imageUrl,
