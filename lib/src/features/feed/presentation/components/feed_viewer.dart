@@ -133,7 +133,9 @@ class FeedListLayout extends StatelessWidget {
                 pathParameters: {'title': feed[i].title},
               ),
               child: ListTile(
-                leading: CustomImage(imageUrl: feed[i].url),
+                leading: SizedBox(
+                    width: Sizes.p64,
+                    child: CustomImage(imageUrl: feed[i].url)),
                 title: Text(
                   feed[i].title,
                   style: Theme.of(context).textTheme.titleMedium,

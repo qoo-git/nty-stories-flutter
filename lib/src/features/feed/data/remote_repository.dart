@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:nyt/src/exceptions/app_exceptions.dart';
 import 'package:nyt/src/features/feed/data/data_repository.dart';
 import 'dart:convert';
 
@@ -6,11 +7,6 @@ import 'package:nyt/src/features/feed/domain/feed_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'remote_repository.g.dart';
-
-class RemoteRepositoryException implements Exception {
-  RemoteRepositoryException(this.message);
-  final String message;
-}
 
 class RemoteRepository implements DataRepository {
   static const baseUrl = 'https://api.nytimes.com/svc/topstories/v2';
@@ -23,11 +19,11 @@ class RemoteRepository implements DataRepository {
     final url = Uri.parse('$baseUrl/$section.json?api-key=$apiKey');
     final response = await http.get(url);
     if (response.statusCode != 200) {
-      throw RemoteRepositoryException('Error fetching news');
+      throw RemoteRepositoryException();
     }
     final data = json.decode(response.body);
     if (data.isEmpty) {
-      throw RemoteRepositoryException('News not available');
+      throw RemoteRepositoryException();
     }
 
     List<Feed> newsItems = [];
@@ -58,8 +54,8 @@ class RemoteRepository implements DataRepository {
   static Feed? _getFeedArticle(List<Feed> feed, String title) {
     try {
       return feed.firstWhere((news) => news.title == title);
-    } catch (_) {
-      return null;
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 
