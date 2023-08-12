@@ -9,6 +9,7 @@ import 'package:nyt/src/common_widgets/responsive_multi_column_layout.dart';
 import 'package:nyt/src/constants/app_sizes.dart';
 import 'package:nyt/src/features/feed/data/fake_data_respository.dart';
 import 'package:nyt/src/features/feed/domain/feed_model.dart';
+import 'package:nyt/src/features/feed/presentation/components/filter_provider.dart';
 import 'package:nyt/src/routes/app_routes.dart';
 
 class ArticlePage extends StatelessWidget {
@@ -31,7 +32,8 @@ class ArticlePage extends StatelessWidget {
       ),
       body: Consumer(
         builder: (context, ref, _) {
-          final articleValue = ref.watch(fakeFeedArticleProvider(title));
+          final section = ref.watch(filterSectionProvider);
+          final articleValue = ref.watch(feedProvider(section, title));
           return AsyncValueWidget(
             value: articleValue,
             data: (article) => article == null

@@ -10,9 +10,11 @@ class FeedPage extends StatefulWidget {
   const FeedPage({
     super.key,
     required this.viewOption,
+    required this.section,
   });
 
   final FeedViewOptions viewOption;
+  final String section;
 
   @override
   State<FeedPage> createState() => _FeedPageState();

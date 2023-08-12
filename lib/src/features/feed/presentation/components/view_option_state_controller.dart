@@ -18,7 +18,7 @@ class ViewOptionStateController extends StateNotifier<ViewOptionState> {
 final viewOptionStateControllerProvider = StateNotifierProvider.autoDispose
     .family<ViewOptionStateController, ViewOptionState, FeedViewOptions>(
         (ref, viewOption) {
-  final feedRepository = ref.watch(fakeFeedRepositoryProvider);
+  final feedRepository = ref.watch(feedRepositoryProvider);
   return ViewOptionStateController(
       viewOption: viewOption, feedRepository: feedRepository);
 });

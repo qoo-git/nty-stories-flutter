@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nyt/src/features/feed/data/fake_data_respository.dart';
+import 'package:nyt/src/features/feed/presentation/components/filter_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewPage extends ConsumerStatefulWidget {
@@ -24,7 +25,8 @@ class _WebViewPageState extends ConsumerState<WebViewPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final article = ref.watch(fakeFeedArticleProvider(widget.title));
+    final section = ref.watch(filterSectionProvider);
+    final article = ref.watch(feedProvider(section, widget.title));
     _controller = WebViewController()
       ..setNavigationDelegate(
         NavigationDelegate(

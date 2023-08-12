@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:nyt/src/constants/filter_options.dart';
 import 'package:nyt/src/features/feed/presentation/article_page.dart';
 import 'package:nyt/src/features/feed/presentation/components/view_option_state.dart';
 import 'package:nyt/src/features/feed/presentation/feed_page.dart';
@@ -17,8 +18,8 @@ final GoRouter goRouter = GoRouter(
     GoRoute(
       name: AppRoutes.feed.name,
       path: '/',
-      builder: (context, state) =>
-          const FeedPage(viewOption: FeedViewOptions.grid),
+      builder: (context, state) => FeedPage(
+          section: filterOptions.first, viewOption: FeedViewOptions.grid),
       routes: [
         GoRoute(
           name: AppRoutes.article.name,

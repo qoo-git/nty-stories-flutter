@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nyt/src/constants/app_sizes.dart';
 import 'package:nyt/src/constants/filter_options.dart';
-import 'package:nyt/src/features/feed/presentation/components/article_search_state_provider.dart';
+import 'package:nyt/src/features/feed/presentation/components/filter_provider.dart';
 
 class FilterButton extends ConsumerStatefulWidget {
   const FilterButton({super.key});
@@ -36,7 +36,7 @@ class _FilterButtonState extends ConsumerState<FilterButton> {
             );
           }).toList(),
           onChanged: (String? value) {
-            ref.read(articleSearchQueryStateProvider.notifier).state = value!;
+            ref.read(filterSectionProvider.notifier).state = value!;
             setState(() {
               _dropdownValue = value;
             });
