@@ -37,7 +37,7 @@ void main() {
     returns first 3 articles''', () async {
       final feedRepository = makeFeedRepository();
       expect(
-        await feedRepository.fetchFeedArticlesList('arts'),
+        await feedRepository.fetchFeedArticlesList(section: 'arts'),
         [kTestFeed[0], kTestFeed[1], kTestFeed[2]],
       );
     });
@@ -46,7 +46,7 @@ void main() {
     returns four articles''', () async {
       final feedRepository = makeFeedRepository();
       expect(
-        await feedRepository.fetchFeedArticlesList('movies'),
+        await feedRepository.fetchFeedArticlesList(section: 'movies'),
         [kTestFeed[3], kTestFeed[4], kTestFeed[5], kTestFeed[6]],
       );
     });
@@ -55,17 +55,38 @@ void main() {
     returns last three article''', () async {
       final feedRepository = makeFeedRepository();
       expect(
-        await feedRepository.fetchFeedArticlesList('science'),
+        await feedRepository.fetchFeedArticlesList(section: 'science'),
         [kTestFeed[7], kTestFeed[8], kTestFeed[9]],
       );
     });
 
-    test('''watchFeedArticle(arts, Emergence of Artificial Intelligence)
-    emits  first three kTestProducts''', () async {
+    test('''fetchFeedArticle(arts, Emergence of Artificial Intelligence)
+    returns  first three kTestProducts''', () async {
       final feedRepository = makeFeedRepository();
       expect(
-        feedRepository.watchFeedList('arts'),
-        emits(kTestFeed),
+        await feedRepository.fetchFeedArticle(
+            section: 'arts', title: 'Emergence of Artificial Intelligence'),
+        kTestFeed[0],
+      );
+    });
+
+    test('''searchFeedArticle(arts, Emergence of Artificial Intelligence)
+    return 3 kTestProducts''', () async {
+      final feedRepository = makeFeedRepository();
+      expect(
+        await feedRepository.searchFeedArticle(
+            section: 'arts', query: 'Emergence of Artificial Intelligence'),
+        [kTestFeed[0]],
+      );
+    });
+
+    test('''searchFeedArticle(movies, Claire Wangari)
+    return 2  kTestProducts''', () async {
+      final feedRepository = makeFeedRepository();
+      expect(
+        await feedRepository.searchFeedArticle(
+            section: 'movies', query: 'Claire Wangari'),
+        [kTestFeed[3], kTestFeed[5]],
       );
     });
   });

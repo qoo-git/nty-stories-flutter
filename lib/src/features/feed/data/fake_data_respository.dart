@@ -27,19 +27,9 @@ class FakeFeedRepository implements DataRepository {
   @override
 
   /// Fetch all the articles that belong to a given section
-  Future<List<Feed>> fetchFeedArticlesList(String section) async {
+  Future<List<Feed>> fetchFeedArticlesList({required String section}) async {
     return Future.value(
         _feed.value.where((article) => article.section == section).toList());
-  }
-
-  Stream<List<Feed>> watchFeedList(String section) {
-    return _feed.stream;
-  }
-
-  @override
-  Stream<Feed?> watchFeedArticle(String section, String title) {
-    return watchFeedList(section)
-        .map((article) => _getFeedArticle(article, title));
   }
 
   static Feed? _getFeedArticle(List<Feed> feed, String title) {
@@ -53,12 +43,13 @@ class FakeFeedRepository implements DataRepository {
   @override
 
   /// Search for an article using the title
-  Future<List<Feed>> searchFeedArticle(String section, String query) async {
+  Future<List<Feed>> searchFeedArticle(
+      {required String section, required String query}) async {
     assert(_feed.value.length <= 100,
         'Client-side search should only be used for small amounts of data');
 
     // fetch all products from repository
-    final feedArticleList = await fetchFeedArticlesList(section);
+    final feedArticleList = await fetchFeedArticlesList(section: section);
     // return any article that matches the query passed
     return feedArticleList
         .where((article) =>
@@ -73,6 +64,18 @@ class FakeFeedRepository implements DataRepository {
             article.section.toUpperCase().contains(query))
         .toList();
   }
+
+  @override
+  Future<Feed?> fetchFeedArticle(
+      {required String title, required String section}) async {
+    final data = await fetchFeedArticlesList(section: section);
+    for (var article in data) {
+      if (article.title == title && article.section == section) {
+        return article;
+      }
+    }
+    return null;
+  }
 }
 
 @riverpod
@@ -83,22 +86,15 @@ FakeFeedRepository feedRepository(FeedRepositoryRef ref) {
 }
 
 @riverpod
-Stream<List<Feed>> feedListStream(FeedListStreamRef ref, String section) {
-  // watch the stream of incoming news feed list
-  final feedRespository = ref.watch(remoteFeedRepositoryProvider);
-  return feedRespository.watchFeedList(section);
-}
-
-@riverpod
-Stream<Feed?> feed(FeedRef ref, String section, String title) {
+Future<Feed?> feed(FeedRef ref, String section, String title) {
   final feedRepository = ref.watch(remoteFeedRepositoryProvider);
-  return feedRepository.watchFeedArticle(section, title);
+  return feedRepository.fetchFeedArticle(section: section, title: title);
 }
 
 @riverpod
 Future<List<Feed>> feedListFuture(FeedListFutureRef ref, String section) {
   final feedRepository = ref.watch(remoteFeedRepositoryProvider);
-  return feedRepository.fetchFeedArticlesList(section);
+  return feedRepository.fetchFeedArticlesList(section: section);
 }
 
 @riverpod
@@ -113,5 +109,5 @@ Future<List<Feed>> feedListSearch(
   });
   ref.onDispose(() => timer.cancel());
   final feedRepository = ref.watch(remoteFeedRepositoryProvider);
-  return feedRepository.searchFeedArticle(section, query);
+  return feedRepository.searchFeedArticle(section: section, query: query);
 }

@@ -15,7 +15,7 @@ class RemoteRepository implements DataRepository {
   @override
 
   /// fetch all news articles from a given section
-  Future<List<Feed>> fetchFeedArticlesList(String section) async {
+  Future<List<Feed>> fetchFeedArticlesList({required String section}) async {
     final url = Uri.parse('$baseUrl/$section.json?api-key=$apiKey');
     final response = await http.get(url);
     if (response.statusCode != 200) {
@@ -40,29 +40,23 @@ class RemoteRepository implements DataRepository {
     return newsItems;
   }
 
-  Stream<List<Feed>> watchFeedList(String section) {
-    final data = Stream.fromFuture(fetchFeedArticlesList(section));
-    return data;
-  }
-
   @override
-  Stream<Feed?> watchFeedArticle(String title, String section) {
-    return watchFeedList(section)
-        .map((article) => _getFeedArticle(article, title));
-  }
-
-  static Feed? _getFeedArticle(List<Feed> feed, String title) {
-    try {
-      return feed.firstWhere((news) => news.title == title);
-    } catch (e) {
-      throw Exception(e.toString());
+  Future<Feed?> fetchFeedArticle(
+      {required String title, required String section}) async {
+    final data = await fetchFeedArticlesList(section: section);
+    for (var article in data) {
+      if (article.title == title && article.section == section) {
+        return article;
+      }
     }
+    return null;
   }
 
   @override
-  Future<List<Feed>> searchFeedArticle(String section, String query) async {
+  Future<List<Feed>> searchFeedArticle(
+      {required String section, required String query}) async {
     // fetch all articles from the given section
-    final feedArticleList = await fetchFeedArticlesList(section);
+    final feedArticleList = await fetchFeedArticlesList(section: section);
     // return any article that matches the query passed
     return feedArticleList
         .where((article) =>

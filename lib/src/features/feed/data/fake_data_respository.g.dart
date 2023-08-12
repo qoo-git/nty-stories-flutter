@@ -21,7 +21,7 @@ final feedRepositoryProvider = AutoDisposeProvider<FakeFeedRepository>.internal(
 );
 
 typedef FeedRepositoryRef = AutoDisposeProviderRef<FakeFeedRepository>;
-String _$feedListStreamHash() => r'6ff25ac4cd4f01676be440e086809f0ef12020d5';
+String _$feedHash() => r'153038816f79afe522d4307a7f3fa6bad9f928fa';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -44,89 +44,7 @@ class _SystemHash {
   }
 }
 
-typedef FeedListStreamRef = AutoDisposeStreamProviderRef<List<Feed>>;
-
-/// See also [feedListStream].
-@ProviderFor(feedListStream)
-const feedListStreamProvider = FeedListStreamFamily();
-
-/// See also [feedListStream].
-class FeedListStreamFamily extends Family<AsyncValue<List<Feed>>> {
-  /// See also [feedListStream].
-  const FeedListStreamFamily();
-
-  /// See also [feedListStream].
-  FeedListStreamProvider call(
-    String section,
-  ) {
-    return FeedListStreamProvider(
-      section,
-    );
-  }
-
-  @override
-  FeedListStreamProvider getProviderOverride(
-    covariant FeedListStreamProvider provider,
-  ) {
-    return call(
-      provider.section,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'feedListStreamProvider';
-}
-
-/// See also [feedListStream].
-class FeedListStreamProvider extends AutoDisposeStreamProvider<List<Feed>> {
-  /// See also [feedListStream].
-  FeedListStreamProvider(
-    this.section,
-  ) : super.internal(
-          (ref) => feedListStream(
-            ref,
-            section,
-          ),
-          from: feedListStreamProvider,
-          name: r'feedListStreamProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$feedListStreamHash,
-          dependencies: FeedListStreamFamily._dependencies,
-          allTransitiveDependencies:
-              FeedListStreamFamily._allTransitiveDependencies,
-        );
-
-  final String section;
-
-  @override
-  bool operator ==(Object other) {
-    return other is FeedListStreamProvider && other.section == section;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, section.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-String _$feedHash() => r'346bb1a1d9b4d7c6dcdcf1d0717211f5acf0dd41';
-typedef FeedRef = AutoDisposeStreamProviderRef<Feed?>;
+typedef FeedRef = AutoDisposeFutureProviderRef<Feed?>;
 
 /// See also [feed].
 @ProviderFor(feed)
@@ -174,7 +92,7 @@ class FeedFamily extends Family<AsyncValue<Feed?>> {
 }
 
 /// See also [feed].
-class FeedProvider extends AutoDisposeStreamProvider<Feed?> {
+class FeedProvider extends AutoDisposeFutureProvider<Feed?> {
   /// See also [feed].
   FeedProvider(
     this.section,
@@ -213,7 +131,7 @@ class FeedProvider extends AutoDisposeStreamProvider<Feed?> {
   }
 }
 
-String _$feedListFutureHash() => r'490cf89095f0fb0ac4a4c86e79b9e26294812516';
+String _$feedListFutureHash() => r'bfa6e0d99464a56f84ebcf73fc4c9fd01b956427';
 typedef FeedListFutureRef = AutoDisposeFutureProviderRef<List<Feed>>;
 
 /// See also [feedListFuture].
@@ -295,7 +213,7 @@ class FeedListFutureProvider extends AutoDisposeFutureProvider<List<Feed>> {
   }
 }
 
-String _$feedListSearchHash() => r'6e739422259160206997478427725734d708a119';
+String _$feedListSearchHash() => r'30534d0c384fd0b4e3e1393fdecaf0bfd714e3b7';
 typedef FeedListSearchRef = AutoDisposeFutureProviderRef<List<Feed>>;
 
 /// See also [feedListSearch].

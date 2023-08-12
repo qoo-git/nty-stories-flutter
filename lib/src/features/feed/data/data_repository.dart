@@ -4,13 +4,15 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 abstract class DataRepository {
   /// fetch all news articles from a given section
-  Future<List<Feed>> fetchFeedArticlesList(String section);
+  Future<List<Feed>> fetchFeedArticlesList({required String section});
 
   ///fetch a single news article from a list of new articles in a certain section
-  Stream<Feed?> watchFeedArticle(String title, String section);
+  Future<Feed?> fetchFeedArticle(
+      {required String title, required String section});
 
   /// fetch a news article with the requested title or author
-  Future<List<Feed>> searchFeedArticle(String section, String query);
+  Future<List<Feed>> searchFeedArticle(
+      {required String section, required String query});
 }
 
 final dataRepositoryProvider = Provider<DataRepository>((ref) {
