@@ -4,6 +4,7 @@ import 'package:nyt/src/constants/app_sizes.dart';
 import 'package:nyt/src/features/feed/presentation/components/feed_viewer.dart';
 import 'package:nyt/src/features/feed/presentation/components/search_and_filter_bar.dart';
 import 'package:nyt/src/features/feed/presentation/components/view_option_state.dart';
+import 'package:nyt/src/features/feed/presentation/components/view_options.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({
@@ -55,8 +56,19 @@ class _FeedPageState extends State<FeedPage> {
           slivers: <Widget>[
             ResponsiveSliverCenter(
               padding: const EdgeInsets.all(Sizes.p16),
-              child: SearchAndFilterBar(
-                viewOption: widget.viewOption,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SearchAndFilterBar(
+                    viewOption: widget.viewOption,
+                  ),
+                  const SizedBox(
+                    height: Sizes.p8,
+                  ),
+                  ViewOptions(
+                    viewOption: widget.viewOption,
+                  ),
+                ],
               ),
             ),
             ResponsiveSliverCenter(
