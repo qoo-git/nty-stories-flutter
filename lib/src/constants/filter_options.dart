@@ -1,4 +1,4 @@
-List<String> filterOptions = [
+const filterOptions = [
   'arts',
   'automobiles',
   'business',

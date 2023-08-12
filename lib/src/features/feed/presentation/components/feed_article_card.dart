@@ -25,7 +25,7 @@ class FeedArticleCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              CustomImage(imageUrl: feedArticle.thumbnail),
+              CustomImage(imageUrl: feedArticle.url),
               gapH8,
               const Divider(),
               gapH8,

@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nyt/src/constants/app_sizes.dart';
 import 'package:nyt/src/constants/filter_options.dart';
+import 'package:nyt/src/features/feed/presentation/components/article_search_state_provider.dart';
 
-class FilterButton extends StatefulWidget {
+class FilterButton extends ConsumerStatefulWidget {
   const FilterButton({super.key});
 
   @override
-  State<FilterButton> createState() => _FilterButtonState();
+  ConsumerState<FilterButton> createState() => _FilterButtonState();
 }
 
-class _FilterButtonState extends State<FilterButton> {
+class _FilterButtonState extends ConsumerState<FilterButton> {
   var _dropdownValue = filterOptions.first;
   @override
   Widget build(BuildContext context) {
@@ -34,8 +36,9 @@ class _FilterButtonState extends State<FilterButton> {
             );
           }).toList(),
           onChanged: (String? value) {
+            ref.read(articleSearchQueryStateProvider.notifier).state = value!;
             setState(() {
-              _dropdownValue = value!;
+              _dropdownValue = value;
             });
           },
         ),

@@ -64,7 +64,7 @@ class ArticleDetails extends StatelessWidget {
       startContent: Card(
         child: Padding(
           padding: const EdgeInsets.all(Sizes.p16),
-          child: CustomImage(imageUrl: article.thumbnail),
+          child: CustomImage(imageUrl: article.url),
         ),
       ),
       spacing: Sizes.p16,

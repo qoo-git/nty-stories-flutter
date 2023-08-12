@@ -56,7 +56,10 @@ class FakeFeedRepository {
             article.title.toUpperCase().contains(query) ||
             article.author.toLowerCase().contains(query) ||
             article.author.contains(query) ||
-            article.author.toUpperCase().contains(query))
+            article.author.toUpperCase().contains(query) ||
+            article.section.toLowerCase().contains(query) ||
+            article.section.contains(query) ||
+            article.section.toUpperCase().contains(query))
         .toList();
   }
 }
