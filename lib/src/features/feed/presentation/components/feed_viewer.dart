@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nyt/src/common_widgets/async_value_widget.dart';
 import 'package:nyt/src/common_widgets/custom_image.dart';
 import 'package:nyt/src/constants/app_sizes.dart';
@@ -11,6 +12,7 @@ import 'package:nyt/src/features/feed/presentation/components/article_search_sta
 import 'package:nyt/src/features/feed/presentation/components/feed_article_card.dart';
 import 'package:nyt/src/features/feed/presentation/components/view_option_state.dart';
 import 'package:nyt/src/features/feed/presentation/components/view_option_state_controller.dart';
+import 'package:nyt/src/routes/app_routes.dart';
 
 class FeedViewer extends ConsumerStatefulWidget {
   const FeedViewer({super.key, this.onShowListView, required this.viewOption});
@@ -45,14 +47,24 @@ class _FeedViewerState extends ConsumerState<FeedViewer> {
                   itemCount: feed.length,
                   itemBuilder: (_, index) {
                     final feedArticle = feed[index];
-                    // TODO: navigate to article details screen
-                    return FeedArticleCard(feedArticle: feedArticle);
+                    // * MouseRehion and its cursor property are used to set
+                    // * the cursor to a pointer on web platform
+                    // * It has no effect on mobile
+                    return MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        child: FeedArticleCard(
+                          feedArticle: feedArticle,
+                          onTap: () => context.goNamed(
+                            AppRoutes.article.name,
+                            pathParameters: {'title': feedArticle.title},
+                          ),
+                        ),
+                      ),
+                    );
                   },
                 )
-              : FeedListLayout(
-                  feed: feed,
-                  itemCount: feed.length,
-                ),
+              : FeedListLayout(feed: feed),
     );
   }
 }
@@ -98,18 +110,16 @@ class FeedListLayout extends StatelessWidget {
   const FeedListLayout({
     super.key,
     required this.feed,
-    required this.itemCount,
   });
 
   final List<Feed> feed;
-  final int itemCount;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        for (var i = 0; i < itemCount; i++)
+        for (var i = 0; i < feed.length; i++)
           Container(
             padding: const EdgeInsets.all(Sizes.p8),
             margin: const EdgeInsets.symmetric(vertical: Sizes.p8),
@@ -117,15 +127,23 @@ class FeedListLayout extends StatelessWidget {
               color: const Color(0xFFf7f2f9),
               borderRadius: BorderRadius.circular(Sizes.p8),
             ),
-            child: ListTile(
-              leading: CustomImage(imageUrl: feed[i].thumbnail),
-              title: Text(
-                feed[i].title,
-                style: Theme.of(context).textTheme.titleMedium,
+            child: GestureDetector(
+              onTap: () => context.goNamed(
+                AppRoutes.article.name,
+                pathParameters: {'title': feed[i].title},
               ),
-              subtitle: Text(
-                feed[i].author,
-                style: Theme.of(context).textTheme.bodySmall,
+              child: ListTile(
+                leading: CustomImage(imageUrl: feed[i].thumbnail),
+                title: Text(
+                  feed[i].title,
+                  style: Theme.of(context).textTheme.titleMedium,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                subtitle: Text(
+                  feed[i].author,
+                  style: Theme.of(context).textTheme.bodySmall,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
           ),

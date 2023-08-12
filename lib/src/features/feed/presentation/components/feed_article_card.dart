@@ -32,11 +32,13 @@ class FeedArticleCard extends StatelessWidget {
               Text(
                 feedArticle.title,
                 style: Theme.of(context).textTheme.titleMedium,
+                overflow: TextOverflow.ellipsis,
               ),
               gapH8,
               Text(
                 feedArticle.author,
                 style: Theme.of(context).textTheme.bodySmall!,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
