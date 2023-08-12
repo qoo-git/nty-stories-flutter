@@ -42,7 +42,7 @@ class _FeedPageState extends State<FeedPage> {
 // This method dismisses the on-screen keyboard when the user scrolls
   void _dismissOnScreenKeyboard() {
     if (FocusScope.of(context).hasFocus) {
-      Focus.of(context).unfocus();
+      FocusManager.instance.primaryFocus?.unfocus();
     }
   }
 

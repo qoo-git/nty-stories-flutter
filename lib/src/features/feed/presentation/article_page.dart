@@ -20,6 +20,7 @@ class ArticlePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
         backgroundColor: const Color(0xFFf7f2f9),
         title: Text(
@@ -89,7 +90,7 @@ class ArticleDetails extends StatelessWidget {
                   child: ElevatedButton(
                       onPressed: () => context.goNamed(
                             AppRoutes.webview.name,
-                            pathParameters: {'link': article.link},
+                            pathParameters: {'title': article.title},
                           ),
                       child: Text(
                         'See more',
