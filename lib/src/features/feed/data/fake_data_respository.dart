@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:nyt/src/constants/test_feed.dart';
 import 'package:nyt/src/features/feed/data/data_repository.dart';
+import 'package:nyt/src/features/feed/data/remote_repository.dart';
 import 'package:nyt/src/features/feed/domain/feed_model.dart';
 import 'package:nyt/src/utils/in_memory.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -84,19 +85,19 @@ FakeFeedRepository feedRepository(FeedRepositoryRef ref) {
 @riverpod
 Stream<List<Feed>> feedListStream(FeedListStreamRef ref, String section) {
   // watch the stream of incoming news feed list
-  final feedRespository = ref.watch(feedRepositoryProvider);
+  final feedRespository = ref.watch(remoteFeedRepositoryProvider);
   return feedRespository.watchFeedList(section);
 }
 
 @riverpod
 Stream<Feed?> feed(FeedRef ref, String section, String title) {
-  final feedRepository = ref.watch(feedRepositoryProvider);
+  final feedRepository = ref.watch(remoteFeedRepositoryProvider);
   return feedRepository.watchFeedArticle(section, title);
 }
 
 @riverpod
 Future<List<Feed>> feedListFuture(FeedListFutureRef ref, String section) {
-  final feedRepository = ref.watch(feedRepositoryProvider);
+  final feedRepository = ref.watch(remoteFeedRepositoryProvider);
   return feedRepository.fetchFeedArticlesList(section);
 }
 
@@ -111,6 +112,6 @@ Future<List<Feed>> feedListSearch(
     link.close();
   });
   ref.onDispose(() => timer.cancel());
-  final feedRepository = ref.watch(feedRepositoryProvider);
+  final feedRepository = ref.watch(remoteFeedRepositoryProvider);
   return feedRepository.searchFeedArticle(section, query);
 }
