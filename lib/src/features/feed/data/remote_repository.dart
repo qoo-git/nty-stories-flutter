@@ -3,6 +3,9 @@ import 'package:nyt/src/features/feed/data/data_repository.dart';
 import 'dart:convert';
 
 import 'package:nyt/src/features/feed/domain/feed_model.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'remote_repository.g.dart';
 
 class RemoteRepositoryException implements Exception {
   RemoteRepositoryException(this.message);
@@ -75,4 +78,9 @@ class RemoteRepository implements DataRepository {
             article.author.toUpperCase().contains(query))
         .toList();
   }
+}
+
+@riverpod
+RemoteRepository remoteFeedRepository(RemoteFeedRepositoryRef ref) {
+  return RemoteRepository();
 }

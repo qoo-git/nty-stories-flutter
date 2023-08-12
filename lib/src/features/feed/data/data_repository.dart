@@ -13,7 +13,7 @@ abstract class DataRepository {
   Future<List<Feed>> searchFeedArticle(String section, String query);
 }
 
-final remoteFeedRepositoryProvider = Provider<DataRepository>((ref) {
+final dataRepositoryProvider = Provider<DataRepository>((ref) {
   // * Override this on the main.dart file to use the remote repository in production
   throw UnimplementedError();
 });
