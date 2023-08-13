@@ -19,7 +19,7 @@ class _FilterButtonState extends ConsumerState<FilterButton> {
       children: [
         Icon(
           Icons.filter_alt_rounded,
-          size: Sizes.p16,
+          size: Sizes.p20,
           color: Colors.grey[700],
         ),
         const SizedBox(
@@ -32,7 +32,10 @@ class _FilterButtonState extends ConsumerState<FilterButton> {
           items: filterOptions.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value),
+              child: Text(
+                value,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
             );
           }).toList(),
           onChanged: (String? value) {

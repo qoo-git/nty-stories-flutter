@@ -32,7 +32,7 @@ class _SearchTextFieldState extends ConsumerState<SearchTextField> {
             hintText: 'Search',
             icon: const Icon(
               Icons.search_rounded,
-              size: Sizes.p16,
+              size: Sizes.p20,
             ),
             suffix: value.text.isNotEmpty
                 ? IconButton(
@@ -43,7 +43,7 @@ class _SearchTextFieldState extends ConsumerState<SearchTextField> {
                     },
                     icon: const Icon(
                       Icons.clear_rounded,
-                      size: Sizes.p16,
+                      size: Sizes.p20,
                     ),
                   )
                 : null,

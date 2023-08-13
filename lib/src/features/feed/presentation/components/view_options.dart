@@ -22,7 +22,7 @@ class ViewOptions extends ConsumerWidget {
           },
           icon: Icon(
             Icons.list,
-            size: Sizes.p16,
+            size: Sizes.p20,
             color: Colors.grey[700],
           ),
         ),
@@ -34,7 +34,7 @@ class ViewOptions extends ConsumerWidget {
           },
           icon: Icon(
             Icons.grid_view_rounded,
-            size: Sizes.p12,
+            size: Sizes.p16,
             color: Colors.grey[700],
           ),
         ),
