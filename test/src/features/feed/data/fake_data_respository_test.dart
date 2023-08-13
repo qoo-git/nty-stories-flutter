@@ -70,6 +70,16 @@ void main() {
       );
     });
 
+    test('''fetchFeedArticle(arts, Artificial Intelligence)
+    returns null ''', () async {
+      final feedRepository = makeFeedRepository();
+      expect(
+        await feedRepository.fetchFeedArticle(
+            section: 'arts', title: 'Artificial Intelligence'),
+        null,
+      );
+    });
+
     test('''searchFeedArticle(arts, Emergence of Artificial Intelligence)
     return 3 kTestProducts''', () async {
       final feedRepository = makeFeedRepository();

@@ -13,7 +13,8 @@ class FeedArticleCard extends StatelessWidget {
   final Feed feedArticle;
   final VoidCallback? onTap;
 
-  // TODO: set keys for testing
+  // * Keys for testing using find.byKey()
+  static const gridArticleKey = Key('grid-card');
 
   @override
   Widget build(BuildContext context) {
