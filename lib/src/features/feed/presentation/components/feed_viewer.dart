@@ -25,7 +25,6 @@ class FeedViewer extends ConsumerStatefulWidget {
 class _FeedViewerState extends ConsumerState<FeedViewer> {
   @override
   Widget build(BuildContext context) {
-    // TODO: Listen for errors on fetching news feed data
     final feedListValue = ref.watch(articleSearchResultProvider);
     final viewOptionState =
         ref.watch(viewOptionStateControllerProvider(widget.viewOption));

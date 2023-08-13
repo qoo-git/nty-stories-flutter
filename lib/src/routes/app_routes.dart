@@ -4,6 +4,7 @@ import 'package:nyt/src/features/feed/presentation/article_page.dart';
 import 'package:nyt/src/features/feed/presentation/components/view_option_state.dart';
 import 'package:nyt/src/features/feed/presentation/feed_page.dart';
 import 'package:nyt/src/features/feed/presentation/webview.dart';
+import 'package:nyt/src/routes/not_found_screen.dart';
 
 enum AppRoutes {
   feed,
@@ -41,5 +42,5 @@ final GoRouter goRouter = GoRouter(
       ],
     )
   ],
-  // TODO: error builder
+  errorBuilder: (context, state) => const NotFoundScreen(),
 );
