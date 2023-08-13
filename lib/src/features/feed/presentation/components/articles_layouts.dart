@@ -13,6 +13,8 @@ class FeedGridLayout extends StatelessWidget {
   final int itemCount;
   // Function to build a Widget for every grid item
   final Widget Function(BuildContext, int) itemBuilder;
+  // * keys to use in testing throug find.byKey
+  static const gridKey = Key('grid-key');
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,8 @@ class FeedListLayout extends StatelessWidget {
   });
 
   final List<Feed> feed;
+  // * keys to use in testing throug find.byKey
+  final gridKey = const Key('list-key');
 
   @override
   Widget build(BuildContext context) {

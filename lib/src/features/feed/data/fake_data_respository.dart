@@ -104,7 +104,7 @@ Future<List<Feed>> feedListSearch(
   String query,
 ) async {
   final link = ref.keepAlive();
-  final timer = Timer(const Duration(seconds: 20), () {
+  final timer = Timer(const Duration(seconds: 60), () {
     link.close();
   });
   ref.onDispose(() => timer.cancel());

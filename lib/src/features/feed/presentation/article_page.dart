@@ -59,6 +59,8 @@ class ArticleDetails extends StatelessWidget {
   const ArticleDetails({super.key, required this.article});
 
   final Feed article;
+  // * keys to use in testing throug find.byKey
+  static const articleKey = Key('article-key');
 
   @override
   Widget build(BuildContext context) {

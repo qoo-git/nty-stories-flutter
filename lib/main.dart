@@ -16,7 +16,6 @@ void main() async {
   final container = ProviderContainer();
   final errorLogger = container.read(errorLoggerProvider);
   // * Register error handlers. For more info, see:
-
   registerErrorHandlers(errorLogger);
   // * Entry point of the app
 
