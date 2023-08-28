@@ -6,4 +6,4 @@ New York Times Top Stories App. This app fetches the top stories from the New Yo
 
 1. Git clone the repository ``
 2. Install the dependencies `flutter pub get`
-3. Run the app on any device of your choice.
+3. Run the app on any mobile device of your choice.
